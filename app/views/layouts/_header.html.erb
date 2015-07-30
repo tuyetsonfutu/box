@@ -1,0 +1,37 @@
+<header class= "navbar-fixed-top navbar-default">
+<div class="container">
+  <nav class="navbar">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <a class="navbar-brand" href= "/index" > Venshop </a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="collapse">
+      <ul class="nav navbar-nav">
+      </ul>
+      <form class="navbar-form navbar-left" role="search">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search" style="width: 300px;">
+        </div>
+        <button type="submit" class="btn btn-success">Submit</button>
+      </form>
+      <ul class="nav navbar-nav navbar-right">
+        <% if user_signed_in? || admin_signed_in? %>
+          <li>
+            <span class="glyphicon glyphicon-log-out">
+            <%= link_to "Log out", destroy_user_session_path, method: "delete" %>
+            </span>
+          </li>
+        <% else %>
+          <li><a href="/users/sign_up"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+          <li><a href="/users/sign_in"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+        <% end %>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+</div>
+
+</header>

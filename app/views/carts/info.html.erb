@@ -1,0 +1,54 @@
+<% if !session[:cart].nil? && !session[:cart].empty? %>
+  <div class="col-md-3" style=" padding-top: 50px;">
+    <% if admin_signed_in? %>
+      <h1>Admin</h1>
+      <%= render 'layouts/admin' %>
+    <% else %>
+      <%= render 'layouts/cart' %>
+    <% end %>
+  </div>
+  <div class="col-md-9" style=" padding-top: 50px;">
+    <h1>Cart info</h1>
+    <ul>
+    <% @total = 0 %>
+    <% cart_product.each do |id, quantity| %>
+      <% product = Product.find_by_id(id) %>
+      <% if !product.nil? %>
+        <% @total = @total + product.price * quantity %>
+        <li>
+          <%= link_to product.name, "/products/#{product.id}" %>
+          </br>
+          <p>Quantity: <%=  quantity %></p>
+        </li>
+      <% end -%>
+    <% end -%>
+    <br>
+    <h2> <%= number_to_currency(@total/100.to_f, :unit => '$')%> </h2>
+  </ul>
+  <div class="row">
+    <div class="col-md-10 ">
+      <% if user_signed_in? %>
+        <% mail = @current_user.email  %>
+        <% name = "" %>
+        <% address = "" %>
+      <% else %>
+        <% mail = "" %>
+        <% name = "" %>
+        <% address = "" %>
+      <% end %>
+      <%= form_for(:session, url: create_cart_path) do |f| %>
+        <%= f.label :mail %>
+        <%= f.email_field :mail, value: mail, class: 'form-control'%>
+        <%= f.label :name %>
+        <%= f.text_field :name, class: 'form-control' %>
+        <%= f.label :address %>
+        <%= f.text_field :address, class: 'form-control' %>
+        </br>
+        <%= f.submit "Submit" , class: "btn btn-primary" %>
+      <% end %>
+    </div>
+  </div>
+</div>
+<%else%>
+  <h1>Your Cart is Empty</h1>
+<% end -%>

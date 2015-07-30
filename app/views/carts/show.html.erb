@@ -1,0 +1,27 @@
+<h1>show cart</h1>
+<div class="col-md-3" style=" padding-top: 50px;">
+  <% if admin_signed_in? %>
+    <h1>Admin</h1>
+    <%= render 'layouts/admin' %>
+  <% else %>
+    <%= render 'layouts/cart' %>
+  <% end %>
+</div>
+<div class="col-md-9" style=" padding-top: 50px;">
+  <ul>
+    <% if !@show_cart.nil? %>
+      <% @show_cart.each do |cart| %>
+      <h4>
+        <%= cart.id.to_s + "   |   "%>
+        <%= cart.mail.to_s + "   |   " %>
+        <%= cart.name.to_s + "   |   " %>
+        <%= cart.total_price.to_s + "   |   " %>
+        <%= cart.address+ "   |   " %>
+        <%= cart.status.to_s  %>
+      </h4>
+      <% end -%>
+    <% else -%>
+      <h2> Your cart Empty </h2>
+    <% end -%>
+  </ul>
+</div>

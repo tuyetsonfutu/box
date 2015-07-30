@@ -1,0 +1,25 @@
+<div class="col-md-3" style=" padding-top: 50px;">
+  <% if admin_signed_in? %>
+    <h1>Admin</h1>
+  <% else %>
+    <%= render 'layouts/cart' %>
+    <%= render 'categories/view' %>
+  <% end %>
+</div>
+<div class="col-md-9"  style=" padding-top: 50px;">
+  <div class="center jumbotron" style="padding-left: 35px;">
+  <%= image_tag(@product.image)%>
+  <h3><%= simple_format(@product.name) %></h3>
+  <h3><%= (@product.price/100.to_f).to_s + "$" %></h3>
+  </br>
+  <%= simple_format(@product.description) %>
+  </br>
+
+  <form action="/cart_products" style="padding-left: 0px" >
+    <input type="number" name="quantity" value= "1" min="1" max="100" value="1">
+    </br>
+    <input type="submit" value="Add" class = "btn btn-lg btn-success" />
+    <input type="hidden" name="id" value="<%= @product.id %>"/>
+  </form>
+  </div>
+</div>

@@ -1,0 +1,13 @@
+
+</ul>
+<div class="dropdown"  style="padding-top: 10px;"  >
+  <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown" style="font-size: 1.5em;   width: 230px;">Category
+  <span class="caret"></span></button>
+  <ul class="dropdown-menu nav nav-pills nav-stacked" >
+     <li class="list-group-item">
+        <% @categories.each do |category| %>
+        <h4><%= link_to category.name, "/categories/#{category.id}" %></h4>
+        <% end -%>
+     </li>
+  </ul>
+</div>

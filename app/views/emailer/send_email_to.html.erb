@@ -1,0 +1,24 @@
+
+<h1>Your Cart</h1>
+<ul>
+  <% total = 0 %>
+  <%byebug%>
+  <% if !@cart_product.nil? %>
+    <% @cart_product.each do |id, quantity| %>
+      <% product = Product.find_by_id(id) %>
+      <% if !product.nil? %>
+        <% total = total + product.price * quantity %>
+        <li>
+          <%= link_to truncate(product.name, length:15), "/products/#{product.id}" %>
+          <%= quantity %>
+        </li>
+      <% end %>
+    <% end -%>
+  <% else %>
+      <h3>Empty</h3>
+  <% end -%>
+  <br>
+  <br>
+  <h2> <%= number_to_currency(total/100.to_f, :unit => '$')%> </h2>
+  <h2> Thank !</h2>
+</ul>

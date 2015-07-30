@@ -1,0 +1,60 @@
+<h1>Your Cart</h1>
+<div class="col-md-3" style=" padding-top: 50px;">
+  <% if admin_signed_in? %>
+    <h1>Admin</h1>
+    <%= render 'layouts/admin' %>
+  <% else %>
+    <%= render 'layouts/cart' %>
+    <%= render 'categories/view' %>
+  <% end %>
+</div>
+<div class="col-md-9" style=" padding-top: 50px;">
+  <div class="col-md-12">
+    <form class="navbar-left" style="padding-left: 0px" >
+      <%= link_to "Empty Cart" ,'/cart_product/clear' %>
+    </form>
+    <form class=" navbar-right" >
+      <%= link_to "Back " ,root_path %>
+    </form>
+    </div>
+  <div>
+    <ul>
+    <% total = 0 %>
+    <% if !@cart_product.nil? %>
+      <% @cart_product.each do |id, quantity| %>
+        <% product = Product.find_by_id(id) %>
+        <% if !product.nil? %>
+          <% total = total + product.price * quantity.to_i %>
+          <div class="col-md-4">
+            <%= image_tag(product.image, size: "170x210")%>
+            <h5><%= truncate(product.name, length: 22) %></h5>
+              <%=  number_to_currency(product.price/100.to_f) %>
+            </br>
+            <form action="/cart_product/update" style="padding-left : 0px ; resize: vertical;" >
+               <input type="number" name="new_quantity" min="1" max="100" value= <%= quantity %> >
+              </br>
+              <input type="submit" value="Update" style="font-size: 1em;" />
+              <input type="hidden" name="id" value="<%= product.id %>"/>
+            </form>
+            <form action="/cart_product/remove" style="padding-left : 0px" >
+              <input type="submit" value="Remove"  style="font-size: 1em;" />
+              <input type="hidden" name="id" value="<%= product.id %>"/>
+            </form>
+          </div>
+        <% end %>
+      <% end -%>
+      <% else %>
+        <h2>Empty</h2>
+      <% end -%>
+    </ul>
+  </div>
+
+
+  <div class="footer col-md-12">
+    </br>
+    </br>
+    <h2> Total price: <%=(total/100.to_f).to_s + "$" %></h2>
+    </br>
+    <%= link_to "Checkout", "/cart", class: "btn btn-lg btn-danger"%>
+  </div>
+</div>

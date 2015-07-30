@@ -1,0 +1,23 @@
+<div class="col-md-3" style=" padding-top: 50px;">
+  <% if admin_signed_in? %>
+    <h1>Admin</h1>
+    <%= render 'layouts/admin' %>
+  <% else %>
+    <%= render 'layouts/cart' %>
+    <%= render 'categories/view' %>
+  <% end %>
+</div>
+<div class="col-md-9" style=" padding-top: 50px;">
+  <% @products.each do |product| %>
+    <div class="col-md-4">
+      <div class="center jumbotron" style="padding-left : 40px;">
+      <%= image_tag(product.image, size: "170x210")%>
+      <h5><%= truncate(product.name, length: 22) %></h5>
+      <%=  (product.price/100.to_f).to_s + "$" %>
+      </br>
+      <%= link_to "Info", "/products/#{product.id}", class: "btn btn-lg btn-info"  %>
+      <%= link_to "Buy", "/products/#{product.id}", class: "btn btn-lg btn-danger"  %>
+      </div>
+    </div>
+  <% end -%>
+</div>
